@@ -2,9 +2,12 @@ package world;
 
 import life.Lifeform;
 
-//Plant Class
-//Author: Will Otterbein
-//Version: 2024-1
+/**
+ * Cell class.
+ * 
+ * @author Will Otterbein
+ * @version 2024-1
+ */
 public class Cell {
 	// The cells neighbors
 	private Cell[] neighbours;
@@ -18,7 +21,9 @@ public class Cell {
 		this.l = l;
 		if (l != null) {
 			l.c = this;
+			isEmpty = false;
 		}
+		isEmpty = true;
 	}
 	
 	// Returns the lifeform in this cell.

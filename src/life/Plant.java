@@ -2,13 +2,12 @@ package life;
 
 import java.awt.Color;
 
-//For now, color legend:
-//1 -- green
-//2 -- yellow
-
-// Plant Class
-// Author: Will Otterbein
-// Version: 2024-1
+/**
+ * Class to represent Plant lifeforms.
+ * 
+ * @author Will Otterbein
+ * @version 2024-1
+ */
 public class Plant extends Lifeform implements HerbEdible {
 	
 	public Plant() {

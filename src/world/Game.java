@@ -7,9 +7,12 @@ import java.awt.event.*;
 import java.awt.Graphics;
 import java.awt.Color;
 
-//Game Class
-//Author: Will Otterbein
-//Version: 2024-1
+/**
+ * Game class for The Game of Life.
+ * 
+ * @author Will Otterbein
+ * @version 2024-1
+ */
 public class Game extends JFrame implements Colors {
 	// GAME CONSTANTS
 	public static final int modifier = 20;

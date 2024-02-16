@@ -1,14 +1,15 @@
 package life;
 
 import life.Lifeform;
+import world.RandomGenerator;
+import world.Cell;
 
-//For now, color legend:
-//1 -- green
-//2 -- yellow
-
-// Plant Class
-// Author: Will Otterbein
-// Version: 2024-1
+/**
+ * Class to represent Herbivore lifeforms
+ * 
+ * @author Will Otterbein
+ * @version 2024-1
+ */
 public class Herbivore extends Lifeform {
     
     public Herbivore() {
@@ -17,9 +18,36 @@ public class Herbivore extends Lifeform {
         this.health = lifespan;
     }
     
-    // Behaviour of Plant
+    private void eat() {
+    	
+    }
+    
+    /**
+     * Moves a herbivore.
+     * It is possible that after a herbivore moves
+     * other behaviours are triggered
+     */
+    private void move() {
+    	if (this.c != null) {
+	    	Cell oC = this.c;
+	    	Cell nC = c.getNeighbours()[RandomGenerator.nextNumber(c.getNeighbours().length-1)];
+	    	while (!nC.isEmpty) {
+	    		nC = c.getNeighbours()[RandomGenerator.nextNumber(c.getNeighbours().length-1)];
+	    	}
+	    	this.c = nC;
+	    	nC.setLifeform(this);
+	    	oC.setLifeform(null);
+    	}
+    }
+    
+    /**
+     * Defines the default sequence of Herbivore behaviour
+     */
     @Override
     public void behave() {
-        // Do the behavior of a herbivore... whateverelse that might be
+    	if (health == 0)
+    		die();
+    	//health--;
+        //move();
     }
 }

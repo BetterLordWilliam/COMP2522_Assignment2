@@ -2,6 +2,12 @@ package misc;
 
 import java.awt.Color;
 
+/**
+ * Interface for color data.
+ * 
+ * @author Will Otterbein
+ * @version 2024-1
+ */
 public interface Colors {
 	// COLORS
 	public static final Color BLACK = new Color(0, 0, 0);

@@ -5,9 +5,13 @@ import world.Cell;
 
 import java.awt.Color;
 
-//Lifeform Class
-//Author: Will Otterbein
-//Version: 2024-1
+/**
+ * Lifeform abstract class.
+ * Commonalities of all the lifeforms
+ * 
+ * @author Will Otterbein
+ * @version 2024-1
+ */
 public abstract class Lifeform implements Colors {
 	// Attributes of lifeforms
 	public int color;
@@ -16,9 +20,13 @@ public abstract class Lifeform implements Colors {
 	public Color LC;
 	public Cell c;
 	
-	// Make the cell die
+	/**
+	 * Kills a specified Lifeform
+	 * 
+	 * Sets all references to this Lifeform to be NULL.
+	 * Garbage collected will destroy this memory (hopefully quick)
+	 */
 	protected void die() {
-		// TODO Auto-generated method stub
 		Cell oC = c;
 		this.c.setLifeform(null);
 		this.c = null;
