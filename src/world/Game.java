@@ -56,9 +56,9 @@ public class Game extends JFrame implements Colors {
 		public void paintComponent(final Graphics g) {
 			super.paintComponent(g);
 			
-			for (int x = 0; x < w.worldX; x++) {
-				for (int y = 0; y < w.worldY; y++) {
-					Cell currentCell = w.cells[x][y];
+			for (int y = 0; y < w.worldY; y++) {
+				for (int x = 0; x < w.worldY; x++) {
+					Cell currentCell = w.cells[y][x];
 					Color c = WHITE;
 					
 					try {
@@ -111,6 +111,6 @@ public class Game extends JFrame implements Colors {
 	public static void main(String[] args) {
 		int numOfTurns = 5;
 		int gridSize = 20;
-		Game g = new Game(numOfTurns, 25, 25);
+		Game g = new Game(numOfTurns, 20, 20);
 	}
 }
