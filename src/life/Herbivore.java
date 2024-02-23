@@ -18,8 +18,34 @@ public class Herbivore extends Lifeform {
         this.health = lifespan;
     }
     
-    private void eat() {
-    	
+    /**
+     * Kills the life form that is passed
+     * Appropriately increases the lifeform who consumes health.
+     * 
+     * @param l Lifeform that we are going to eat
+     */
+    private void eat(Lifeform l) {
+    	l.die();					// just call the die method for that plant
+    	this.health = lifespan + 1;	// replenish animal health
+    }
+    
+    /**
+     * Returns the Cell which is where the animal should go
+     * 
+     * @param oC old Cell of the herbivore
+     * @return nC Cell where the animal will move
+     */
+    private Cell getGoodMove(Cell oC) {
+    	Cell nC = c.getNeighbours()[RandomGenerator.nextNumber(c.getNeighbours().length-1)];
+    	while (!nC.isEmpty) {
+    		if (nC.getLifeform() instanceof HerbEdible) {
+    			// Found a plant!
+    			eat(nC.getLifeform());		// Eat the plant
+    			break;						// Return to move code
+    		}
+    		nC = c.getNeighbours()[RandomGenerator.nextNumber(c.getNeighbours().length-1)];
+    	}
+    	return nC;
     }
     
     /**
@@ -30,10 +56,7 @@ public class Herbivore extends Lifeform {
     private void move() {
     	if (this.c != null) {
 	    	Cell oC = this.c;
-	    	Cell nC = c.getNeighbours()[RandomGenerator.nextNumber(c.getNeighbours().length-1)];
-	    	while (!nC.isEmpty) {
-	    		nC = c.getNeighbours()[RandomGenerator.nextNumber(c.getNeighbours().length-1)];
-	    	}
+	    	Cell nC = getGoodMove(oC);
 	    	this.c = nC;
 	    	nC.setLifeform(this);
 	    	oC.setLifeform(null);
@@ -47,7 +70,7 @@ public class Herbivore extends Lifeform {
     public void behave() {
     	if (health == 0)
     		die();
-    	//health--;
-        //move();
+    	health--;
+        move();
     }
 }

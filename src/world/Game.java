@@ -33,7 +33,7 @@ public class Game extends JFrame implements Colors {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					elapsedTurns++;
-					cycle();
+					gCycle();
 				}
 			});
 		}
@@ -101,8 +101,7 @@ public class Game extends JFrame implements Colors {
 	}
 	
 	// Cycle the game.
-	public void cycle() {
-		System.out.println(elapsedTurns);
+	public void gCycle() {
 		w.cycle();
 		gp.repaint();
 	}
@@ -111,6 +110,6 @@ public class Game extends JFrame implements Colors {
 	public static void main(String[] args) {
 		int numOfTurns = 5;
 		int gridSize = 20;
-		Game g = new Game(numOfTurns, 20, 20);
+		Game g = new Game(numOfTurns, 25, 25);
 	}
 }

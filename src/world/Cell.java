@@ -22,8 +22,9 @@ public class Cell {
 		if (l != null) {
 			l.c = this;
 			isEmpty = false;
+		} else {
+			isEmpty = true;
 		}
-		isEmpty = true;
 	}
 	
 	// Returns the lifeform in this cell.
