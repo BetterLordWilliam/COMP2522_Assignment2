@@ -15,7 +15,7 @@ import java.awt.Color;
  */
 public class Game extends JFrame implements Colors {
 	// GAME CONSTANTS
-	public static final int modifier = 20;
+	public static final int modifier = 25;
 	
 	// Game info
 	int sizeX, sizeY;
