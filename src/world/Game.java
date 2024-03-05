@@ -65,7 +65,7 @@ public class Game extends JFrame implements Colors {
 			super.paintComponent(g);
 			
 			for (int y = 0; y < w.worldY; y++) {
-				for (int x = 0; x < w.worldY; x++) {
+				for (int x = 0; x < w.worldX; x++) {
 					Cell currentCell = w.cells[y][x];
 					Color c = WHITE;
 					

@@ -40,7 +40,7 @@ public class World {
      * @param c Cell object instance
      * @return array of Cells
      */
-    private Cell[] returnNeighbours(Cell c, int x, int y) {
+    private Cell[] returnNeighbours(int x, int y) {
     	List<Cell> neighbours = new ArrayList<>();
     	
     	// Possible directions
@@ -73,9 +73,9 @@ public class World {
             for (int x = 0; x < worldX; x++) {
                 cells[y][x] = new Cell();
                 int lp = RandomGenerator.nextNumber(100);
-                if (lp >= 85) {
+                if (lp > 85) {
                     cells[y][x].setLifeform(new Herbivore());
-                } else if (lp >= 65) {
+                } else if (lp > 65) {
                     cells[y][x].setLifeform(new Plant());
                 }
             }
@@ -86,7 +86,7 @@ public class World {
         	for (int x = 0; x < worldX; x++) {
         		// Tell the cell who it is beside
         		cells[y][x].setNeighbours(
-    				returnNeighbours(cells[y][x], x, y)
+    				returnNeighbours(x, y)
     			);
         	}
         }

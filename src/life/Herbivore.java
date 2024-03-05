@@ -26,7 +26,7 @@ public class Herbivore extends Lifeform {
      */
     private void eat(Lifeform l) {
     	l.die();					// just call the die method for that plant
-    	this.health = lifespan + 1;	// replenish animal health
+    	this.health = this.lifespan + 1;	// replenish animal health
     }
     
     /**
