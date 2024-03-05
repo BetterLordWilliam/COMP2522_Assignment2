@@ -18,7 +18,7 @@ public class Plant extends Lifeform implements HerbEdible {
 	private static final int REQ_EMPTY = 3;
 	
 	public Plant() {
-		this.LC = GREEN;
+		setColour(GREEN);
 		this.lifespan = 5;
 		this.health = lifespan;
 	}
@@ -33,8 +33,8 @@ public class Plant extends Lifeform implements HerbEdible {
 	 * 		Puts a new plant there. """
 	 */
 	private void breed() {
-    	if (this.c != null) {
-        	Cell[] nS = c.getNeighbours();
+    	if (getCell() != null) {
+        	Cell[] nS = getCell().getNeighbours();
         	ArrayList<Cell> pMoves = new ArrayList<>();
         	
         	int nPlants = 0;

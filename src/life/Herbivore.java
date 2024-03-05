@@ -13,7 +13,7 @@ import world.Cell;
 public class Herbivore extends Lifeform {
     
     public Herbivore() {
-        this.LC = YELLOW;
+        setColour(YELLOW);
         this.lifespan = 5;
         this.health = lifespan;
     }
@@ -36,14 +36,14 @@ public class Herbivore extends Lifeform {
      * @return nC Cell where the animal will move
      */
     private Cell getGoodMove(Cell oC) {
-    	Cell nC = c.getNeighbours()[RandomGenerator.nextNumber(c.getNeighbours().length-1)];
+    	Cell nC = getCell().getNeighbours()[RandomGenerator.nextNumber(getCell().getNeighbours().length-1)];
     	while (!nC.isEmpty) {
     		if (nC.getLifeform() instanceof HerbEdible) {
     			// Found a plant!
     			eat(nC.getLifeform());		// Eat the plant
     			break;						// Return to move code
     		}
-    		nC = c.getNeighbours()[RandomGenerator.nextNumber(c.getNeighbours().length-1)];
+    		nC = getCell().getNeighbours()[RandomGenerator.nextNumber(getCell().getNeighbours().length-1)];
     	}
     	return nC;
     }
@@ -54,10 +54,10 @@ public class Herbivore extends Lifeform {
      * other behaviours are triggered
      */
     private void move() {
-    	if (this.c != null) {
-	    	Cell oC = this.c;
+    	if (getCell() != null) {
+	    	Cell oC = getCell();
 	    	Cell nC = getGoodMove(oC);
-	    	this.c = nC;
+	    	setCell(nC);
 	    	nC.setLifeform(this);
 	    	oC.setLifeform(null);
     	}

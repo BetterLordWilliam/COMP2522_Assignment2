@@ -15,10 +15,10 @@ import java.awt.Color;
 public abstract class Lifeform implements Colors {
 	// Attributes of lifeforms
 	public int color;
-	public int health;
-	public int lifespan;
-	public Color LC;
-	public Cell c;
+	protected int health;
+	protected int lifespan;
+	private Color LC;
+	private Cell c;
 	
 	/**
 	 * Kills a specified Lifeform
@@ -34,4 +34,40 @@ public abstract class Lifeform implements Colors {
 	
 	// Behaviours of lifeforms
 	public abstract void behave();
+	
+	/**
+	 * Sets the lifeforms colour.
+	 * 
+	 * @param c
+	 */
+	public void setColour(Color c) {
+		LC = c;
+	}
+	
+	/**
+	 * Sets the lifeforms Cell.
+	 * 
+	 * @param c
+	 */
+	public void setCell(Cell c) {
+		this.c = c;
+	}
+	
+	/**
+	 * Gets the lifeforms Cell.
+	 * 
+	 * @return
+	 */
+	public Cell getCell() {
+		return c;
+	}
+	
+	/**
+	 * Gets the lifeforms Colour.
+	 * 
+	 * @return
+	 */
+	public Color getColour() {
+		return LC;
+	}
 }

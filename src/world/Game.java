@@ -25,7 +25,15 @@ public class Game extends JFrame implements Colors {
 	private World w;
 	private GamePanel gp;
 	
-	// Inner class GamePanel
+	/**
+	 * GamePanel class, derived from Panel class.
+	 * Is the actual window where stuff is drawn.
+	 * 
+	 * A mouse listener is here too.
+	 * 
+	 * @author Will Otterbein
+	 * @version 2024-1
+	 */
 	class GamePanel extends JPanel {
 		public GamePanel() {
 			// Mouse Listener on game panel
@@ -63,7 +71,7 @@ public class Game extends JFrame implements Colors {
 					
 					try {
 						// Colors
-						c = currentCell.getLifeform().LC;
+						c = currentCell.getLifeform().getColour();
 					} catch (NullPointerException e) {
 					}
 					
@@ -81,7 +89,13 @@ public class Game extends JFrame implements Colors {
         }
 	}
 	
-	// Game creation
+	/**
+	 * Constructor to create a new Game.
+	 * 
+	 * @param maxTurns int turns
+	 * @param sizeX int x size
+	 * @param sizeY int y size
+	 */
 	public Game(int maxTurns, int sizeX, int sizeY) {
 		this.maxTurns = maxTurns;
 		this.sizeX = sizeX;
