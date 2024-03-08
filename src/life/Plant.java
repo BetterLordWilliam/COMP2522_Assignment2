@@ -52,8 +52,10 @@ public class Plant extends Lifeform implements HerbEdible {
         		}
         	}
         	
+        	// System.out.println(this + " " + nPlants + " " + eCells);
+        	
         	// If the breed conditions are met
-        	if (nPlants >= REQ_PLANTS && eCells >= REQ_EMPTY) {
+        	if (nPlants == REQ_PLANTS && eCells >= REQ_EMPTY) {
         		Cell nC = pMoves.get(RandomGenerator.nextNumber(eCells));
         		nC.setLifeform(new Plant());	// Seed the random cell with a plant
         	}
@@ -61,7 +63,7 @@ public class Plant extends Lifeform implements HerbEdible {
 	}
 	
 	/**
-	 * Function to handle the various behaviours of a plant
+	 * Function to handle the various behaviours of a plant.
 	 */
 	@Override
 	public void behave() {

@@ -112,5 +112,7 @@ public class World {
     		Lifeform l = behaviourQueue.pollFirst();
     		l.behave();
     	}
+    	
+    	// System.out.println();
     }
 }
