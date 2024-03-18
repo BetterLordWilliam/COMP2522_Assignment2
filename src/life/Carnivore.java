@@ -10,10 +10,10 @@ import world.Cell;
  * @author Will Otterbein
  * @version 2024-1
  */
-public class Herbivore extends Lifeform implements CarnEdible {
+public class Carnivore extends Lifeform {
     
-    public Herbivore() {
-        setColour(YELLOW);
+    public Carnivore() {
+        setColour(RED);
         this.lifespan = 5;
         this.health = lifespan;
     }
@@ -38,7 +38,7 @@ public class Herbivore extends Lifeform implements CarnEdible {
     private Cell getGoodMove(Cell oC) {
     	Cell nC = getCell().getNeighbours()[RandomGenerator.nextNumber(getCell().getNeighbours().length-1)];
     	while (!nC.isEmpty) {
-    		if (nC.getLifeform() instanceof HerbEdible) {
+    		if (nC.getLifeform() instanceof CarnEdible) {
     			// Found a plant!
     			eat(nC.getLifeform());		// Eat the plant
     			break;						// Return to move code

@@ -4,6 +4,7 @@ import java.util.*;
 
 import life.Lifeform;
 import life.Herbivore;
+import life.Carnivore;
 import life.Plant;
 import world.Cell;
 import world.RandomGenerator;
@@ -77,6 +78,8 @@ public class World {
                     cells[y][x].setLifeform(new Herbivore());
                 } else if (lp > 65) {
                     cells[y][x].setLifeform(new Plant());
+                } else if (lp > 50) {
+                    cells[y][x].setLifeform(new Carnivore());
                 }
             }
         }
