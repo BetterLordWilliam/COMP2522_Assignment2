@@ -76,12 +76,12 @@ public class World {
                 cells[y][x] = new Cell();
                 int lp = RandomGenerator.nextNumber(100);
                 if (lp > 95) {
-                    cells[y][x].setLifeform(new Omnivore());
-                } else if (lp > 85) {
+                	cells[y][x].setLifeform(new Omnivore());
+            	} else if (lp > 85) {
                     cells[y][x].setLifeform(new Carnivore());
-                } else if (lp > 70) {
+                } else if (lp > 60) {
                     cells[y][x].setLifeform(new Herbivore());
-                } else if (lp > 45) {
+                } else if (lp > 25) {
                     cells[y][x].setLifeform(new Plant());
                 }
             }

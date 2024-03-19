@@ -12,7 +12,7 @@ import world.RandomGenerator;
  * @author Will Otterbein
  * @version 2024-1
  */
-public class Plant extends Lifeform implements HerbEdible, OmniEdible {
+public class Plant extends Lifeform implements OmniEdible, HerbEdible {
 	
 	private static final int REQ_PLANTS = 2;
 	private static final int REQ_EMPTY = 3;
@@ -47,7 +47,7 @@ public class Plant extends Lifeform implements HerbEdible, OmniEdible {
         		if (cL == null) {		// Empty cells (save those)
         			pMoves.add(nS[i]);
         			eCells++;			// Adjacent plants
-        		} else if (cL instanceof HerbEdible) {
+        		} else if (cL instanceof Plant) {
         			nPlants++;
         		}
         	}
@@ -55,7 +55,7 @@ public class Plant extends Lifeform implements HerbEdible, OmniEdible {
         	// System.out.println(this + " " + nPlants + " " + eCells);
         	
         	// If the breed conditions are met
-        	if (nPlants == REQ_PLANTS && eCells >= REQ_EMPTY) {
+        	if (nPlants >= REQ_PLANTS && eCells >= REQ_EMPTY) {
         		Cell nC = pMoves.get(RandomGenerator.nextNumber(eCells));
         		nC.setLifeform(new Plant());	// Seed the random cell with a plant
         	}
@@ -68,6 +68,9 @@ public class Plant extends Lifeform implements HerbEdible, OmniEdible {
 	@Override
 	public void behave() {
 		// Do the behavior of a herbivore... whateverelse that might be
-		breed();
+		if (!breeded) {
+			breed();
+			breeded = true;
+		}
 	}
 }

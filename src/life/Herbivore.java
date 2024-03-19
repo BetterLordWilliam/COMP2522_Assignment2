@@ -12,7 +12,7 @@ import world.Cell;
  * @author Will Otterbein
  * @version 2024-1
  */
-public class Herbivore extends Lifeform implements CarnEdible, OmniEdible {
+public class Herbivore extends Lifeform implements OmniEdible, CarnEdible {
     
     private static final int REQ_HERB = 1;
     private static final int REQ_PLANT = 2;
@@ -42,19 +42,25 @@ public class Herbivore extends Lifeform implements CarnEdible, OmniEdible {
      * @return nC Cell where the animal will move
      */
     private Cell getGoodMove(Cell oC) {
-        Cell[] cellsActual = getCell().getNeighbours();
-        Cell[] cells = cellsActual.clone();
-        int index = RandomGenerator.nextNumber(cells.length - 1);
-        Cell nC = cells[index];
-        while(!nC.isEmpty && cells[index] == null) {
-            if (nC.getLifeform() instanceof OmniEdible) {
-                eat(nC.getLifeform());
-            }
-            cells[index] = null;
-            index = RandomGenerator.nextNumber(cells.length - 1);
-            nC = cellsActual[index];
-        }
-        return nC;
+    	Cell[] cells = getCell().getNeighbours();
+    	ArrayList<Cell> validPlaces = new ArrayList<>();
+    	
+    	for (int i = 0; i < cells.length; i++) {
+    		if (cells[i].isEmpty || cells[i].getLifeform() instanceof HerbEdible)
+    			validPlaces.add(cells[i]);
+    	}
+    	
+    	if (validPlaces.isEmpty())
+    		return oC;					// stationary (nowhere to go)
+    	if (validPlaces.size() == 1)
+    		return validPlaces.get(0);	// only 1 place to go
+    	
+    	int index = RandomGenerator.nextNumber(validPlaces.size() - 1);
+    	Cell nC = validPlaces.get(index);
+    	if (!nC.isEmpty)
+    		eat(nC.getLifeform());
+    	
+    	return nC;
     }
     
     /**
@@ -117,9 +123,9 @@ public class Herbivore extends Lifeform implements CarnEdible, OmniEdible {
      */
     @Override
     public void behave() {
+    	health--;
     	if (health == 0)
     		die();
-    	health--;
     	if (!moved) {
     	    move();
     	    moved = true;

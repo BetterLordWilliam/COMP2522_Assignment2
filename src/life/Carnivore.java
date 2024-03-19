@@ -31,7 +31,7 @@ public class Carnivore extends Lifeform implements OmniEdible {
      * @param l Lifeform that we are going to eat
      */
     private void eat(Lifeform l) {
-    	l.die();					// just call the die method for that plant
+    	l.die();							// just call the die method for the eaten lifeform
     	this.health = this.lifespan + 1;	// replenish animal health
     }
     
@@ -42,19 +42,25 @@ public class Carnivore extends Lifeform implements OmniEdible {
      * @return nC Cell where the animal will move
      */
     private Cell getGoodMove(Cell oC) {
-        Cell[] cellsActual = getCell().getNeighbours();
-        Cell[] cells = cellsActual.clone();
-        int index = RandomGenerator.nextNumber(cells.length - 1);
-        Cell nC = cells[index];
-        while(!nC.isEmpty && cells[index] == null) {
-            if (nC.getLifeform() instanceof OmniEdible) {
-                eat(nC.getLifeform());
-            }
-            cells[index] = null;
-            index = RandomGenerator.nextNumber(cells.length - 1);
-            nC = cellsActual[index];
-        }
-        return nC;
+    	Cell[] cells = getCell().getNeighbours();
+    	ArrayList<Cell> validPlaces = new ArrayList<>();
+    	
+    	for (int i = 0; i < cells.length; i++) {
+    		if (cells[i].isEmpty || cells[i].getLifeform() instanceof CarnEdible)
+    			validPlaces.add(cells[i]);
+    	}
+    	
+    	if (validPlaces.isEmpty())
+    		return oC;					// stationary (nowhere to go)
+    	if (validPlaces.size() == 1)
+    		return validPlaces.get(0);	// only 1 place to go
+    	
+    	int index = RandomGenerator.nextNumber(validPlaces.size() - 1);
+    	Cell nC = validPlaces.get(index);
+    	if (!nC.isEmpty)
+    		eat(nC.getLifeform());
+    	
+    	return nC;
     }
     
     /**
@@ -66,9 +72,11 @@ public class Carnivore extends Lifeform implements OmniEdible {
     	if (getCell() != null) {
 	    	Cell oC = getCell();
 	    	Cell nC = getGoodMove(oC);
-	    	setCell(nC);
-	    	nC.setLifeform(this);
-	    	oC.setLifeform(null);
+	    	if (nC != oC) {
+		    	setCell(nC);
+		    	nC.setLifeform(this);
+		    	oC.setLifeform(null);
+	    	}
     	}
     }
     
@@ -97,10 +105,10 @@ public class Carnivore extends Lifeform implements OmniEdible {
                 if (cL == null) {
                     pMoves.add(nS[i]);
                     eCells++;
-                } else if (cL instanceof HerbEdible) {
-                    nHerb++;
                 } else if (cL instanceof Carnivore) {
                     nCarn++;
+                } else if (cL instanceof CarnEdible) {
+                    nHerb++;
                 }
             }
             
@@ -117,9 +125,9 @@ public class Carnivore extends Lifeform implements OmniEdible {
      */
     @Override
     public void behave() {
+    	health--;
     	if (health == 0)
     		die();
-    	health--;
         if (!moved) {
             move();
             moved = true;
