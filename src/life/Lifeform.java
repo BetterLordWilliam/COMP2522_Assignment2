@@ -19,6 +19,8 @@ public abstract class Lifeform implements Colors {
 	protected int lifespan;
 	private Color LC;
 	private Cell c;
+	protected boolean moved = false;
+	protected boolean breeded = false;
 	
 	/**
 	 * Kills a specified Lifeform
@@ -27,9 +29,21 @@ public abstract class Lifeform implements Colors {
 	 * Garbage collected will destroy this memory (hopefully quick)
 	 */
 	protected void die() {
-		Cell oC = c;
-		this.c.setLifeform(null);
-		this.c = null;
+	    if (this.c != null) {
+	        Cell oC = c;
+	        this.c.setLifeform(null);
+	        this.c = null;
+	    }
+	}
+	
+	/**
+     * Resets behaviour controls.
+     * 
+     * @param c
+     */
+	public void resetBehaveControl() {
+	    moved = false;
+	    breeded = false;
 	}
 	
 	// Behaviours of lifeforms
@@ -40,8 +54,8 @@ public abstract class Lifeform implements Colors {
 	 * 
 	 * @param c
 	 */
-	public void setColour(Color c) {
-		LC = c;
+	public void setColour(Color cl) {
+		LC = cl;
 	}
 	
 	/**
@@ -50,7 +64,7 @@ public abstract class Lifeform implements Colors {
 	 * @param c
 	 */
 	public void setCell(Cell c) {
-		this.c = c;
+	    this.c = c;
 	}
 	
 	/**

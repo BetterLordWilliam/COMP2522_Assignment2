@@ -12,9 +12,9 @@ import world.RandomGenerator;
  * @author Will Otterbein
  * @version 2024-1
  */
-public class Plant extends Lifeform implements HerbEdible {
+public class Plant extends Lifeform implements HerbEdible, OmniEdible {
 	
-	private static final int REQ_PLANTS = 4;
+	private static final int REQ_PLANTS = 2;
 	private static final int REQ_EMPTY = 3;
 	
 	public Plant() {
@@ -32,7 +32,7 @@ public class Plant extends Lifeform implements HerbEdible {
 	 * 		randomly selects one of the empty ones,
 	 * 		Puts a new plant there. """
 	 */
-	private void breed() {
+	public void breed() {
     	if (getCell() != null) {
         	Cell[] nS = getCell().getNeighbours();
         	ArrayList<Cell> pMoves = new ArrayList<>();

@@ -1,5 +1,7 @@
 package life;
 
+import java.util.ArrayList;
+
 import life.Lifeform;
 import world.RandomGenerator;
 import world.Cell;
@@ -10,7 +12,11 @@ import world.Cell;
  * @author Will Otterbein
  * @version 2024-1
  */
-public class Carnivore extends Lifeform {
+public class Carnivore extends Lifeform implements OmniEdible {
+    
+    private static final int REQ_CARN = 1;
+    private static final int REQ_HERB = 2;
+    private static final int REQ_EMPTY = 3;
     
     public Carnivore() {
         setColour(RED);
@@ -36,15 +42,11 @@ public class Carnivore extends Lifeform {
      * @return nC Cell where the animal will move
      */
     private Cell getGoodMove(Cell oC) {
-    	Cell nC = getCell().getNeighbours()[RandomGenerator.nextNumber(getCell().getNeighbours().length-1)];
-    	while (!nC.isEmpty) {
-    		if (nC.getLifeform() instanceof CarnEdible) {
-    			// Found a plant!
-    			eat(nC.getLifeform());		// Eat the plant
-    			break;						// Return to move code
-    		}
-    		nC = getCell().getNeighbours()[RandomGenerator.nextNumber(getCell().getNeighbours().length-1)];
-    	}
+        Cell[] cells = getCell().getNeighbours();
+    	Cell nC = cells[RandomGenerator.nextNumber(cells.length - 1)];
+		if (nC.getLifeform() instanceof CarnEdible) {
+			eat(nC.getLifeform());		// Eat the plant
+		}
     	return nC;
     }
     
@@ -64,6 +66,46 @@ public class Carnivore extends Lifeform {
     }
     
     /**
+     * Function to handle the breeding logic for a plant.
+     * 
+     * """" Works by getting the plants neighbours, 
+     *      saving empty ones and counting the numbers of plants and empty.
+     *      Then it checks if these numbers match its conditions,
+     *      randomly selects one of the empty ones,
+     *      Puts a new plant there. """
+     */
+    private void breed() {
+        if (getCell() != null) {
+            Cell[] nS = getCell().getNeighbours();
+            ArrayList<Cell> pMoves = new ArrayList<>();
+            
+            int nHerb = 0;
+            int nCarn = 0;
+            int eCells = 0;
+            
+            // Determine the number of plant neighbours and empty cell neighbours
+            // Save the empty ones in a list
+            for (int i = 0; i < nS.length; i++) {
+                Lifeform cL = nS[i].getLifeform();
+                if (cL == null) {
+                    pMoves.add(nS[i]);
+                    eCells++;
+                } else if (cL instanceof HerbEdible) {
+                    nHerb++;
+                } else if (cL instanceof Carnivore) {
+                    nCarn++;
+                }
+            }
+            
+            // If the breed conditions are met
+            if (nHerb >= REQ_HERB && eCells >= REQ_EMPTY && nCarn >= REQ_CARN) {
+                Cell nC = pMoves.get(RandomGenerator.nextNumber(eCells));
+                nC.setLifeform(new Carnivore());
+            }
+        }
+    }
+    
+    /**
      * Defines the default sequence of Herbivore behaviour
      */
     @Override
@@ -71,6 +113,13 @@ public class Carnivore extends Lifeform {
     	if (health == 0)
     		die();
     	health--;
-        move();
+        if (!moved) {
+            move();
+            moved = true;
+        }
+        if (!breeded) {
+            breed();
+            breeded = true;
+        }
     }
 }

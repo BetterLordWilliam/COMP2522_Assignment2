@@ -12,14 +12,14 @@ import world.Cell;
  * @author Will Otterbein
  * @version 2024-1
  */
-public class Herbivore extends Lifeform implements CarnEdible, OmniEdible {
+public class Omnivore extends Lifeform {
     
-    private static final int REQ_HERB = 1;
-    private static final int REQ_PLANT = 2;
-    private static final int REQ_EMPTY = 2;
+    private static final int REQ_OMNI = 1;
+    private static final int REQ_FOOD = 1;
+    private static final int REQ_EMPTY = 3;
     
-    public Herbivore() {
-        setColour(YELLOW);
+    public Omnivore() {
+        setColour(BLUE);
         this.lifespan = 5;
         this.health = lifespan;
     }
@@ -44,50 +44,10 @@ public class Herbivore extends Lifeform implements CarnEdible, OmniEdible {
     private Cell getGoodMove(Cell oC) {
         Cell[] cells = getCell().getNeighbours();
         Cell nC = cells[RandomGenerator.nextNumber(cells.length - 1)];
-        if (nC.getLifeform() instanceof HerbEdible) {
+        if (nC.getLifeform() instanceof OmniEdible) {
             eat(nC.getLifeform());
         }
         return nC;
-    }
-    
-    /**
-     * Function to handle the breeding logic for a plant.
-     * 
-     * """" Works by getting the plants neighbours, 
-     *      saving empty ones and counting the numbers of plants and empty.
-     *      Then it checks if these numbers match its conditions,
-     *      randomly selects one of the empty ones,
-     *      Puts a new plant there. """
-     */
-    private void breed() {
-        if (getCell() != null) {
-            Cell[] nS = getCell().getNeighbours();
-            ArrayList<Cell> pMoves = new ArrayList<>();
-            
-            int nHerb = 0;
-            int nPlant = 0;
-            int eCells = 0;
-            
-            // Determine the number of plant neighbours and empty cell neighbours
-            // Save the empty ones in a list
-            for (int i = 0; i < nS.length; i++) {
-                Lifeform cL = nS[i].getLifeform();
-                if (cL == null) {
-                    pMoves.add(nS[i]);
-                    eCells++;
-                } else if (cL instanceof Herbivore) {
-                    nHerb++;
-                } else if (cL instanceof HerbEdible) {
-                    nPlant++;
-                }
-            }
-            
-            // If the breed conditions are met
-            if (nHerb == REQ_HERB && eCells >= REQ_EMPTY && nPlant >= REQ_PLANT) {
-                Cell nC = pMoves.get(RandomGenerator.nextNumber(eCells));
-                nC.setLifeform(new Herbivore());
-            }
-        }
     }
     
     /**
@@ -106,6 +66,46 @@ public class Herbivore extends Lifeform implements CarnEdible, OmniEdible {
     }
     
     /**
+     * Function to handle the breeding logic for a plant.
+     * 
+     * """" Works by getting the plants neighbours, 
+     *      saving empty ones and counting the numbers of plants and empty.
+     *      Then it checks if these numbers match its conditions,
+     *      randomly selects one of the empty ones,
+     *      Puts a new plant there. """
+     */
+    private void breed() {
+        if (getCell() != null) {
+            Cell[] nS = getCell().getNeighbours();
+            ArrayList<Cell> pMoves = new ArrayList<>();
+            
+            int nOmni = 0;
+            int nFood = 0;
+            int eCells = 0;
+            
+            // Determine the number of plant neighbours and empty cell neighbours
+            // Save the empty ones in a list
+            for (int i = 0; i < nS.length; i++) {
+                Lifeform cL = nS[i].getLifeform();
+                if (cL == null) {
+                    pMoves.add(nS[i]);
+                    eCells++;
+                } else if (cL instanceof Omnivore) {
+                    nOmni++;
+                } else if (cL instanceof OmniEdible) {
+                    nFood++;
+                }
+            }
+            
+            // If the breed conditions are met
+            if (nFood >= REQ_FOOD && eCells >= REQ_EMPTY && nOmni == REQ_OMNI) {
+                Cell nC = pMoves.get(RandomGenerator.nextNumber(eCells));
+                nC.setLifeform(new Omnivore());
+            }
+        }
+    }
+    
+    /**
      * Defines the default sequence of Herbivore behaviour
      */
     @Override
@@ -113,13 +113,13 @@ public class Herbivore extends Lifeform implements CarnEdible, OmniEdible {
     	if (health == 0)
     		die();
     	health--;
-    	if (!moved) {
-    	    move();
-    	    moved = true;
-    	}
-    	if (!breeded) {
-    	    breed();
-    	    breeded = true;
-    	}
+        if (!moved) {
+            move();
+            moved = true;
+        }
+        if (!breeded) {
+            breed();
+            breeded = true;
+        }
     }
 }

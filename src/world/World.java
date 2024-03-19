@@ -5,6 +5,7 @@ import java.util.*;
 import life.Lifeform;
 import life.Herbivore;
 import life.Carnivore;
+import life.Omnivore;
 import life.Plant;
 import world.Cell;
 import world.RandomGenerator;
@@ -74,12 +75,14 @@ public class World {
             for (int x = 0; x < worldX; x++) {
                 cells[y][x] = new Cell();
                 int lp = RandomGenerator.nextNumber(100);
-                if (lp > 85) {
-                    cells[y][x].setLifeform(new Herbivore());
-                } else if (lp > 65) {
-                    cells[y][x].setLifeform(new Plant());
-                } else if (lp > 50) {
+                if (lp > 95) {
+                    cells[y][x].setLifeform(new Omnivore());
+                } else if (lp > 85) {
                     cells[y][x].setLifeform(new Carnivore());
+                } else if (lp > 70) {
+                    cells[y][x].setLifeform(new Herbivore());
+                } else if (lp > 45) {
+                    cells[y][x].setLifeform(new Plant());
                 }
             }
         }
@@ -106,6 +109,7 @@ public class World {
     		for (int x = 0; x < worldX; x++) {
     			if (cells[y][x].getLifeform() != null) {
     				behaviourQueue.add(cells[y][x].getLifeform());
+    				cells[y][x].getLifeform().resetBehaveControl();
     			}
     		}
     	}
@@ -115,7 +119,5 @@ public class World {
     		Lifeform l = behaviourQueue.pollFirst();
     		l.behave();
     	}
-    	
-    	// System.out.println();
     }
 }
