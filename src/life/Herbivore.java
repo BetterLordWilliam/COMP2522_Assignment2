@@ -42,10 +42,17 @@ public class Herbivore extends Lifeform implements CarnEdible, OmniEdible {
      * @return nC Cell where the animal will move
      */
     private Cell getGoodMove(Cell oC) {
-        Cell[] cells = getCell().getNeighbours();
-        Cell nC = cells[RandomGenerator.nextNumber(cells.length - 1)];
-        if (nC.getLifeform() instanceof HerbEdible) {
-            eat(nC.getLifeform());
+        Cell[] cellsActual = getCell().getNeighbours();
+        Cell[] cells = cellsActual.clone();
+        int index = RandomGenerator.nextNumber(cells.length - 1);
+        Cell nC = cells[index];
+        while(!nC.isEmpty && cells[index] == null) {
+            if (nC.getLifeform() instanceof OmniEdible) {
+                eat(nC.getLifeform());
+            }
+            cells[index] = null;
+            index = RandomGenerator.nextNumber(cells.length - 1);
+            nC = cellsActual[index];
         }
         return nC;
     }

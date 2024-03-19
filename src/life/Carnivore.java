@@ -42,12 +42,19 @@ public class Carnivore extends Lifeform implements OmniEdible {
      * @return nC Cell where the animal will move
      */
     private Cell getGoodMove(Cell oC) {
-        Cell[] cells = getCell().getNeighbours();
-    	Cell nC = cells[RandomGenerator.nextNumber(cells.length - 1)];
-		if (nC.getLifeform() instanceof CarnEdible) {
-			eat(nC.getLifeform());		// Eat the plant
-		}
-    	return nC;
+        Cell[] cellsActual = getCell().getNeighbours();
+        Cell[] cells = cellsActual.clone();
+        int index = RandomGenerator.nextNumber(cells.length - 1);
+        Cell nC = cells[index];
+        while(!nC.isEmpty && cells[index] == null) {
+            if (nC.getLifeform() instanceof OmniEdible) {
+                eat(nC.getLifeform());
+            }
+            cells[index] = null;
+            index = RandomGenerator.nextNumber(cells.length - 1);
+            nC = cellsActual[index];
+        }
+        return nC;
     }
     
     /**
