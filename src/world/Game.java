@@ -98,7 +98,7 @@ public class Game extends JFrame implements Colors {
 	        try {
 	            Thread.sleep(100);
 	        } catch (Exception e) {
-	            System.exit(1);        // Bad
+	            System.exit(1);        // Bad thing happened 
 	        }
 	        elapsedTurns++;
 	        gCycle();
