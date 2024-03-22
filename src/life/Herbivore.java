@@ -64,6 +64,21 @@ public class Herbivore extends Lifeform implements OmniEdible, CarnEdible {
     }
     
     /**
+     * Moves a herbivore.
+     * It is possible that after a herbivore moves
+     * other behaviours are triggered
+     */
+    private void move() {
+        if (getCell() != null) {
+            Cell oC = getCell();
+            Cell nC = getGoodMove(oC);
+            setCell(nC);
+            nC.setLifeform(this);
+            oC.setLifeform(null);
+        }
+    }
+    
+    /**
      * Function to handle the breeding logic for a plant.
      * 
      * """" Works by getting the plants neighbours, 
@@ -101,21 +116,6 @@ public class Herbivore extends Lifeform implements OmniEdible, CarnEdible {
                 nC.setLifeform(new Herbivore());
             }
         }
-    }
-    
-    /**
-     * Moves a herbivore.
-     * It is possible that after a herbivore moves
-     * other behaviours are triggered
-     */
-    private void move() {
-    	if (getCell() != null) {
-	    	Cell oC = getCell();
-	    	Cell nC = getGoodMove(oC);
-	    	setCell(nC);
-	    	nC.setLifeform(this);
-	    	oC.setLifeform(null);
-    	}
     }
     
     /**
