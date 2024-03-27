@@ -40,8 +40,8 @@ public class Game extends JFrame implements Colors {
 			addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					//elapsedTurns++;
-					//gCycle();
+					elapsedTurns++;
+					gCycle();
 				}
 			});
 		}
@@ -92,7 +92,7 @@ public class Game extends JFrame implements Colors {
 	/**
 	 * Automated simulation run.
 	 */
-	private void runSimulation() {
+	/* private void runSimulation() {
 	    int runs = 0;
 	    while (elapsedTurns < maxTurns) {
 	        try {
@@ -103,7 +103,7 @@ public class Game extends JFrame implements Colors {
 	        elapsedTurns++;
 	        gCycle();
 	    }
-	}
+	} */
 	
 	/**
 	 * Constructor to create a new Game.
@@ -129,7 +129,7 @@ public class Game extends JFrame implements Colors {
         //setResizable(false);
         pack();
         
-        runSimulation();            // For automation purposes, my finger no click
+        //runSimulation();            // For automation purposes, my finger no click
 	}
 	
 	// Cycle the game.
